@@ -27,7 +27,7 @@ const mediaClient = new twitter({
 
 let trackNr = fs.readFileSync(trackFile, 'utf8', (err) => {
   if (err) throw err;
-});
+}).replace(/[\n]/g, "");
 
 if (+trackNr > +lastFrameNr) throw 'Koniec klatek';
 
