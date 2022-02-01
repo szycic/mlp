@@ -31,13 +31,13 @@ let trackNr = fs.readFileSync(trackFile, 'utf8', (err) => {
 
 if (+trackNr > +lastFrameNr) throw 'Koniec klatek';
 
-fs.writeFileSync(trackFile, (+trackNr+1).toString(), (err) => {
+fs.writeFileSync(trackFile, (+trackNr + 1).toString(), (err) => {
   if (err) throw err;
 });
 
 const imageData = fs.readFileSync(`${framesDir}/${trackNr}.jpg`);
 
-mediaClient.post('media/upload', {media: imageData}, (err, res) => {
+mediaClient.post('media/upload', { media: imageData }, (err, res) => {
   if (err) throw err;
   const tweetData = {
     url: tweetUrl,
@@ -49,11 +49,11 @@ mediaClient.post('media/upload', {media: imageData}, (err, res) => {
       },
     },
   };
-  
+
   const postTweet = axios({
-    headers: oauthClient.toHeader(oauthClient.authorize({includeBodyHash: true, ...tweetData}, {key: process.env.OAUTHTOKEN, secret: process.env.OAUTHSECRET})),
+    headers: oauthClient.toHeader(oauthClient.authorize({ includeBodyHash: true, ...tweetData }, { key: process.env.OAUTHTOKEN, secret: process.env.OAUTHSECRET })),
     ...tweetData,
-  }).then(res => {
+  }).then((res) => {
     console.log(res.data);
   });
 });
