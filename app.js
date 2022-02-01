@@ -31,7 +31,9 @@ let trackNr = fs.readFileSync(trackFile, 'utf8', (err) => {
 
 if (+trackNr > +lastFrameNr) throw 'Koniec klatek';
 
-fs.writeFileSync(trackFile, (+trackNr+1).toString());
+fs.writeFileSync(trackFile, (+trackNr+1).toString(), (err) => {
+  if (err) throw err;
+});
 
 const imageData = fs.readFileSync(`${framesDir}/${trackNr}.jpg`);
 
