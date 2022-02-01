@@ -6,9 +6,9 @@ const twitter = require('twitter');
 const fs = require('fs');
 const path = require('path');
 
-const trackDir = process.env.TRACKDIR;
-const framesDir = process.env.FRAMESDIR;
-const lastFrameNr = process.env.LASTFRAMENR;
+const trackDir = 'track';
+const framesDir = './frames';
+const lastFrameNr = 31701;
 const tweetUrl = 'https://api.twitter.com/2/tweets';
 
 const oauthClient = oauth({
@@ -26,17 +26,17 @@ const mediaClient = new twitter({
   access_token_secret: process.env.ACCESSSECRET,
 });
 
-let trackNr = fs.readFileSync(path.resolve(trackDir), 'utf8', (err) => {
+let trackNr = fs.readFileSync(path.resolve(__dirname, trackDir), 'utf8', (err) => {
   if (err) throw err;
 }).replace(/[\n]/g, "");
 
-if (+trackNr > +lastFrameNr) throw 'Koniec klatek';
+if (+trackNr > lastFrameNr) throw 'Koniec klatek';
 
-fs.writeFileSync(path.resolve(trackDir), (+trackNr + 1).toString(), (err) => {
+fs.writeFileSync(path.resolve(__dirname, trackDir), (+trackNr + 1).toString(), (err) => {
   if (err) throw err;
 });
 
-const imageData = fs.readFileSync(`${framesDir}/${trackNr}.jpg`);
+const imageData = fs.readFileSync(path.resolve(__dirname, `${framesDir}/${trackNr}.jpg`));
 
 mediaClient.post('media/upload', { media: imageData }, (err, res) => {
   if (err) throw err;
