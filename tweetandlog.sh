@@ -1,0 +1,1 @@
+node /home/ubuntu/mlp/app.js >> "/home/ubuntu/mlp/logs/$(date +"%Y_%m_%d_%I_%M_%p").log"
