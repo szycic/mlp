@@ -55,4 +55,3 @@ mediaClient.post('media/upload', {media: imageData}, (err, res) => {
     console.log(res.data);
   });
 });
-
