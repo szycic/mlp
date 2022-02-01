@@ -5,7 +5,7 @@ const oauth = require('oauth-1.0a');
 const fs = require('fs');
 const twitter = require('twitter');
 
-const trackFile = process.env.TRACKDIR;
+const trackFileDir = process.env.TRACKDIR;
 const framesDir = process.env.FRAMESDIR;
 const lastFrameNr = process.env.LASTFRAMENR;
 const tweetUrl = 'https://api.twitter.com/2/tweets';
@@ -25,13 +25,13 @@ const mediaClient = new twitter({
   access_token_secret: process.env.ACCESSSECRET,
 });
 
-let trackNr = fs.readFileSync(trackFile, 'utf8', (err) => {
+let trackNr = fs.readFileSync(trackFileDir, 'utf8', (err) => {
   if (err) throw err;
 }).replace(/[\n]/g, "");
 
 if (+trackNr > +lastFrameNr) throw 'Koniec klatek';
 
-fs.writeFileSync(trackFile, (+trackNr + 1).toString(), (err) => {
+fs.writeFileSync(trackFileDir, (+trackNr + 1).toString(), (err) => {
   if (err) throw err;
 });
 
