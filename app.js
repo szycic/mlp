@@ -5,8 +5,8 @@ const oauth = require('oauth-1.0a');
 const fs = require('fs');
 const twitter = require('twitter');
 
-const trackFile = 'track';
-const framesDir = './frames';
+const trackFile = process.env.TRACK;
+const framesDir = process.env.FRAMES;
 const framesNr = 31701;
 const tweetUrl = 'https://api.twitter.com/2/tweets';
 
