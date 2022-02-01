@@ -5,9 +5,9 @@ const oauth = require('oauth-1.0a');
 const fs = require('fs');
 const twitter = require('twitter');
 
-const trackFile = process.env.TRACK;
-const framesDir = process.env.FRAMES;
-const framesNr = 31701;
+const trackFile = process.env.TRACKDIR;
+const framesDir = process.env.FRAMESDIR;
+const lastFrameNr = process.env.LASTFRAMENR;
 const tweetUrl = 'https://api.twitter.com/2/tweets';
 
 const oauthClient = oauth({
@@ -29,7 +29,7 @@ let trackNr = fs.readFileSync(trackFile, 'utf8', (err) => {
   if (err) throw err;
 });
 
-if (+trackNr > framesNr) throw 'Koniec klatek';
+if (+trackNr > +lastFrameNr) throw 'Koniec klatek';
 
 fs.writeFileSync(trackFile, (+trackNr+1).toString());
 
@@ -41,7 +41,7 @@ mediaClient.post('media/upload', {media: imageData}, (err, res) => {
     url: tweetUrl,
     method: 'POST',
     data: {
-      text: `${trackNr} of ${framesNr}`,
+      text: `${trackNr} of ${lastFrameNr}`,
       media: {
         media_ids: [`${res.media_id_string}`],
       },
