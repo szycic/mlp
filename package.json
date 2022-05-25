@@ -7,7 +7,7 @@
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
-  "author": "JagaimoDev",
+  "author": "szycic",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.24.0",
